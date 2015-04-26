@@ -15,80 +15,113 @@ router.get('/', function(req, res, next) {
 });
 /* GET localized data. */
 router.get('/:id', function(req, res, next) {
-	var size = 10;
+	var size = 5;
 	var start = "1x1";
-	WorldMap.find(function(err,docs){
+	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
 		if (err) return next(err);
-		var allsquares = filterLocation(docs, id, size, start);
+		//console.log(docs[0].simpleID);
+		var allsquares = filterLocation(docs, size, start);
 		res.render('map', {
 			"allsquares" : allsquares
 		});
 	});
 });
 
-function filterLocation(docs, id, size, start){
-	WorldMap.find({"simpleID" : id}, 'user squares', function(err, map){
-		var splitstart = start.split('x');
-		var startX = splitstart[0];
-		var startY = splitstart[1];
-		var allX = [];
-		allX.push(splitstart[0]);
-		var allY = [];
-		allY.push(splitstart[1]);
-		var allLocations = [];
-		for(var i=1; i<=size; i++){
-			if(startX+i<100){
-				allX.push(startX+i);
-			}
-			else{ allX.push("water");}
+/* GET localized data. */
+router.get('/:id/:size/', function(req, res, next) {
+	var size = req.params.size;
+	var start = "1x1";
+	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
+		if (err) return next(err);
+		//console.log(docs[0].simpleID);
+		var allsquares = filterLocation(docs, size, start);
+		res.render('map', {
+			"allsquares" : allsquares
+		});
+	});
+});
 
-			if(startXi>0){
-				allX.unshift(startX-i);
-			}
-			else{ allX.unshift("water");}
+/* GET localized data. */
+router.get('/:id/:size/:start/', function(req, res, next) {
+	var size = req.params.size;
+	var start = req.params.start;
+	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
+		if (err) return next(err);
+		//console.log(docs[0].simpleID);
+		var allsquares = filterLocation(docs, size, start);
+		res.render('map', {
+			"allsquares" : allsquares
+		});
+	});
+});
 
-			if(startY+i<100){
-				allY.push(startY+i);
-			}
-			else{ allY.push("water");}
-
-			if(startY-i>0){
-				allY.unshift(startY-i);
-			}
-			else{ allY.unshift("water");}
+function filterLocation(docs, size, start){
+	var squares = docs[0].squares[0];
+	var splitstart = start.split('x');
+	var startX = parseInt(splitstart[0], 10);
+	var startY = parseInt(splitstart[1], 10);
+	var allX = [];
+	var allY = [];
+	if(startX<100 && startX>=1) allX.push(startX);
+	if(startY<100 && startY>=1) allY.push(startY);
+	var allLocations = [];
+	for(var i=1; i<=size; i++){
+		if(startX+i<100 && startX+i>=1){
+			allX.push(startX+i);
+			console.log(startX+i);
 		}
-		for(var j=0; j<allX.length; j++){
-			for(var k=0; k<allY.length; k++){
-				if(allX[j]!="water" && allY[k]!="water"){
-				var loc = allX[j]+"x"+allY[k];
+		else{ allX.push("w");}
+
+		if(startX-i<100 && startX-i>=1){
+			allX.unshift(startX-i);
+
+			console.log(startX-i);
+		}
+		else{ allX.unshift("w");}
+
+		if(startY+i<100 && startY+i>=1){
+			allY.push(startY+i);
+		}
+		else{ allY.push("w");}
+
+		if(startY-i<100 && startY-i>=1){
+			allY.unshift(startY-i);
+		}
+		else{ allY.unshift("w");}
+	}
+	console.log(allX);
+	for(var j=0; j<allY.length; j++){
+		for(var k=0; k<allX.length; k++){
+			if(allX[k]!="w" && allY[j]!="w"){
+				var loc = allX[k]+"x"+allY[j];
 				allLocations.push(loc);
-				}
-				else{
-					allLocations.push("water");
-				}
-			}
-		}
-		var allsquares = [];
-		var row = [];
-		var counter = 1;
-		for(var s in allLocations){
-			if(s!="water"){
-				row.push([s, squares.s]);
 			}
 			else{
-				row.push([s, s]);
-			}
-			counter++;
-			if(counter%size===0){
-				allsquares.push(row);
-				row = [];
+				allLocations.push("w");
 			}
 		}
-		return allsquares;
-			
-		
+	}
+	console.log(allLocations.join(' '));
+	var allsquares = [];
+	var row = [];
+	var counter = 1;
+	for(var s in allLocations){
+		var sq = allLocations[s];
+		if(sq!="w"){
+			//console.log(sq);
+			row.push(squares[sq]);
+		}
+		else{
+			row.push(sq);
+		}
+		if(counter%((2*size)+1)===0){
+			allsquares.push(row);
+			row = [];
+		}
+		counter++;
+	}
+	return allsquares;
 
-	});
 }
 
 module.exports = router;
