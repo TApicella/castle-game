@@ -1,0 +1,12 @@
+{
+    "simpleID" : 1,
+    "user" : "testuser",
+    "squares" : {
+    	"0x0" : {
+    		"type" : "forest"
+    	},
+    	"1x0" : {
+    		"type" : "island"
+    	}
+    }
+}
