@@ -4,6 +4,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var WorldMap = require('../models/Map.js');
 
+
 /* GET map data. */
 router.get('/', function(req, res, next) {
 	WorldMap.find(function(err,docs){
@@ -20,9 +21,21 @@ router.get('/:id', function(req, res, next) {
 	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
 		if (err) return next(err);
 		//console.log(docs[0].simpleID);
+		var sqsize = (100/((2*size)+1));
+		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
-		res.render('map', {
-			"allsquares" : allsquares
+		res.render('map2', {
+			"allsquares" : allsquares, "sqsize" : sqsizestring,
+			helpers: {
+				applyStyle: function(baseclass, size){
+					var result = "";
+					result += "<div ";
+					result += "class=\"tile-";
+					result += baseclass;
+					result += "\"></div>";
+					return result;
+				}
+			}
 		});
 	});
 });
@@ -34,9 +47,21 @@ router.get('/:id/:size/', function(req, res, next) {
 	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
 		if (err) return next(err);
 		//console.log(docs[0].simpleID);
+		var sqsize = (100/((2*size)+1));
+		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
-		res.render('map', {
-			"allsquares" : allsquares
+		res.render('map2', {
+			"allsquares" : allsquares, "sqsize" : sqsizestring,
+			helpers: {
+				applyStyle: function(baseclass, size){
+					var result = "";
+					result += "<div ";
+					result += "class=\"tile-";
+					result += baseclass;
+					result += "\"></div>";
+					return result;
+				}
+			}
 		});
 	});
 });
@@ -48,9 +73,26 @@ router.get('/:id/:size/:start/', function(req, res, next) {
 	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
 		if (err) return next(err);
 		//console.log(docs[0].simpleID);
+		var sqsize = (100/((2*size)+1));
+		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
-		res.render('map', {
-			"allsquares" : allsquares
+		res.render('map2', {
+			"allsquares" : allsquares, "sqsize" : sqsizestring,
+			helpers: {
+				applyStyle: function(baseclass, size){
+					var result = "";
+					result += "<div ";
+					result += "class=\"tile-";
+					result += baseclass;
+					result += "\"></div>";
+					var newclass = "tile-"+baseclass;
+					var empty = document.querySelectorAll(".emptysq");
+					empty.className = "";
+					empty.className = newclass;
+					//$('.emptysq').html(result);
+					//$('.emptysq').removeClass();
+				}
+			}
 		});
 	});
 });
@@ -68,14 +110,14 @@ function filterLocation(docs, size, start){
 	for(var i=1; i<=size; i++){
 		if(startX+i<100 && startX+i>=1){
 			allX.push(startX+i);
-			console.log(startX+i);
+			//console.log(startX+i);
 		}
 		else{ allX.push("w");}
 
 		if(startX-i<100 && startX-i>=1){
 			allX.unshift(startX-i);
 
-			console.log(startX-i);
+			//console.log(startX-i);
 		}
 		else{ allX.unshift("w");}
 
@@ -89,7 +131,7 @@ function filterLocation(docs, size, start){
 		}
 		else{ allY.unshift("w");}
 	}
-	console.log(allX);
+	//console.log(allX);
 	for(var j=0; j<allY.length; j++){
 		for(var k=0; k<allX.length; k++){
 			if(allX[k]!="w" && allY[j]!="w"){
@@ -101,7 +143,7 @@ function filterLocation(docs, size, start){
 			}
 		}
 	}
-	console.log(allLocations.join(' '));
+	//console.log(allLocations.join(' '));
 	var allsquares = [];
 	var row = [];
 	var counter = 1;
