@@ -25,17 +25,7 @@ router.get('/:id', function(req, res, next) {
 		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
 		res.render('map2', {
-			"allsquares" : allsquares, "sqsize" : sqsizestring,
-			helpers: {
-				applyStyle: function(baseclass, size){
-					var result = "";
-					result += "<div ";
-					result += "class=\"tile-";
-					result += baseclass;
-					result += "\"></div>";
-					return result;
-				}
-			}
+			"allsquares" : allsquares, "sqsize" : sqsizestring
 		});
 	});
 });
@@ -52,16 +42,6 @@ router.get('/:id/:size/', function(req, res, next) {
 		var allsquares = filterLocation(docs, size, start);
 		res.render('map2', {
 			"allsquares" : allsquares, "sqsize" : sqsizestring,
-			helpers: {
-				applyStyle: function(baseclass, size){
-					var result = "";
-					result += "<div ";
-					result += "class=\"tile-";
-					result += baseclass;
-					result += "\"></div>";
-					return result;
-				}
-			}
 		});
 	});
 });
@@ -77,22 +57,7 @@ router.get('/:id/:size/:start/', function(req, res, next) {
 		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
 		res.render('map2', {
-			"allsquares" : allsquares, "sqsize" : sqsizestring,
-			helpers: {
-				applyStyle: function(baseclass, size){
-					var result = "";
-					result += "<div ";
-					result += "class=\"tile-";
-					result += baseclass;
-					result += "\"></div>";
-					var newclass = "tile-"+baseclass;
-					var empty = document.querySelectorAll(".emptysq");
-					empty.className = "";
-					empty.className = newclass;
-					//$('.emptysq').html(result);
-					//$('.emptysq').removeClass();
-				}
-			}
+			"allsquares" : allsquares, "sqsize" : sqsizestring
 		});
 	});
 });
