@@ -21,11 +21,12 @@ router.get('/:id', function(req, res, next) {
 	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
 		if (err) return next(err);
 		//console.log(docs[0].simpleID);
-		var sqsize = (100/((2*size)+1));
+		var dimensions = (2*size)+1;
+		var sqsize = 100/dimensions;
 		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
 		res.render('map2', {
-			"allsquares" : allsquares, "sqsize" : sqsizestring
+			"allsquares" : allsquares, "sqsize" : sqsizestring, "dimensions":dimensions
 		});
 	});
 });
@@ -37,11 +38,12 @@ router.get('/:id/:size/', function(req, res, next) {
 	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
 		if (err) return next(err);
 		//console.log(docs[0].simpleID);
-		var sqsize = (100/((2*size)+1));
+		var dimensions = (2*size)+1;
+		var sqsize = 100/dimensions;
 		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
 		res.render('map2', {
-			"allsquares" : allsquares, "sqsize" : sqsizestring,
+			"allsquares" : allsquares, "sqsize" : sqsizestring, "dimensions":dimensions
 		});
 	});
 });
@@ -50,16 +52,33 @@ router.get('/:id/:size/', function(req, res, next) {
 router.get('/:id/:size/:start/', function(req, res, next) {
 	var size = req.params.size;
 	var start = req.params.start;
+	var id = req.params.id;
+	var splitstart = start.split("x");
+	var startx = splitstart[0];
+	var starty = splitstart[1];
+	
 	WorldMap.find({"simpleID" : req.params.id},"simpleID user squares", function(err,docs){
 		if (err) return next(err);
 		//console.log(docs[0].simpleID);
-		var sqsize = (100/((2*size)+1));
+		var dimensions = (2*size)+1;
+		var sqsize = 100/dimensions;
 		var sqsizestring = sqsize+"%";
 		var allsquares = filterLocation(docs, size, start);
-		res.render('map2', {
-			"allsquares" : allsquares, "sqsize" : sqsizestring
+		//Make this more robust once maps store their dimensions
+		if(startx<1 || starty<1 || size<1){
+			if(startx<1) startx=1;
+			if(starty<1) starty=1;
+			var newstart = startx+"x"+starty;
+			if(size<1) size=1;
+			var newurl = "/maps/"+id+"/"+size+"/"+newstart+"/";
+			res.redirect(newurl);
+		}
+		else {res.render('map2', {
+			"allsquares" : allsquares, "sqsize" : sqsizestring, "dimensions":dimensions,
+			"id":id, "size":size, "left":parseInt(startx)-1, "right":parseInt(startx)+1, "up":parseInt(starty)-1, "down":parseInt(starty)+1, "zoomin":parseInt(size)-1, "zoomout":parseInt(size)+1
 		});
-	});
+	}
+});
 });
 
 function filterLocation(docs, size, start){
