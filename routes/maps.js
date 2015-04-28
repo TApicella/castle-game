@@ -75,7 +75,7 @@ router.get('/:id/:size/:start/', function(req, res, next) {
 		}
 		else {res.render('map2', {
 			"allsquares" : allsquares, "sqsize" : sqsizestring, "dimensions":dimensions,
-			"id":id, "size":size, "left":parseInt(startx)-1, "right":parseInt(startx)+1, "up":parseInt(starty)-1, "down":parseInt(starty)+1, "zoomin":parseInt(size)-1, "zoomout":parseInt(size)+1
+			"id":id, "size":size, "left":parseInt(startx, 10)-1, "right":parseInt(startx, 10)+1, "up":parseInt(starty, 10)-1, "down":parseInt(starty, 10)+1, "zoomin":parseInt(size, 10)-1, "zoomout":parseInt(size, 10)+1
 		});
 	}
 });
