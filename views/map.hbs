@@ -1,26 +1,87 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-<style>
-.w{
-	width: 10px;
-	height: 10px;
-	background-color: #0000FF;
-	float: left;
-}
-.f{
-	width: 10px;
-	height: 10px;
-	background-color: #00FF00;
-	float: left;
-}
-</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-<div> Squares: </div>
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-{{#each allsquares}}
-<div>
-	{{#each this}}
-		<div class="{{this}}"></div>
-	{{/each}}<br/>
-</div>
+<!-- Optional theme -->
+<link rel="stylesheet" type="text/css" href="/public/stylesheets/castle_game.css">
 
-{{/each}}
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="/public/javascripts/castle_game.js"></script>
+
+<div id="sizebox" class="{{sqsize}}"></div>
+<div id="dimbox" class="{{dimensions}}"></div>
+
+<div id="gameWrapper" class="game-wrapper">
+	<div class="map-background"></div>
+	<div id="map" class="map-container">
+		<div id="loadSquares" class="squares-container">
+			{{#each allsquares}}
+			{{#each this}}
+			<div class="tile-{{this}}"></div>
+			{{/each}}
+
+
+			{{/each}}
+
+		</div>
+
+		<div id="controls" class="controls-bar">
+			<div id="compass" class="map-controls">
+				<table id="compassTable" class="compass-table">
+					<tr class="compass-row">
+						<td align="center" class="compass-cell">
+							<div id="zoomInVal" class="{{zoomin}}">
+								<span id="zoomIn"class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+							</div>
+						</td>
+						<td align="center" class="compass-cell">
+							<div id="upVal" class="{{up}}">
+								<span id="goUp"class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+							</div>
+						</td>
+						<td align="center" class="compass-cell">
+							<div id="zoomOutVal" class="{{zoomout}}">
+								<span id="zoomOut"class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
+							</div>
+						</td>
+					</tr>
+					<tr class="compass-row">
+						<td align="center" class="compass-cell">
+							<div id="leftVal" class="{{left}}">
+								<span id="goLeft"class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
+							</div>
+						</td>
+						<td align="center" class="compass-cell">
+							<div id="homeVal">
+								<span id="goHome"class="glyphicon glyphicon-home" aria-hidden="true"></span>
+							</div>
+						</td>
+
+						<td align="center" class="compass-cell">
+							<div id="rightVal" class="{{right}}">
+								<span id="goRight"class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							</div>
+						</td>
+					</tr>
+					<tr class="compass-row">
+
+						<td></td>
+						<td align="center" class="compass-cell">
+							<div id="downVal" class="{{down}}">
+								<span id="goDown"class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+							</div>
+						</td>
+
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+

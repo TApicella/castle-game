@@ -63,8 +63,7 @@ div {
 .tile-f {
   float: left;
   border:1px solid black;
-  padding-bottom: 5px;
-  background: green;
+  background: #004000;
   -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
   -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
   box-sizing: border-box;
@@ -73,12 +72,48 @@ div {
 .tile-w {
   float: left;
   border:1px solid black;
-  padding-bottom: 5px;
   background: blue;
   -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
   -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
   box-sizing: border-box;
 }
+
+.tile-g {
+  float: left;
+  border:1px solid black;
+  background: green;
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;
+}
+
+.tile-s {
+  float: left;
+  border:1px solid black;
+  background: #FFE8AC;
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;
+}
+
+.tile-d {
+  float: left;
+  border:1px solid black;
+  background: #FFE877;
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;
+}
+
+.tile-v {
+  float: left;
+  border:1px solid black;
+  background: #C8B55F;
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;
+}
+
 
 [class*=sqselect]{
   border: 2px solid yellow;

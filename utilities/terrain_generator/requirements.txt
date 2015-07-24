@@ -1,2 +1,0 @@
-#https://github.com/icbmike/terrainGenerator/blob/master/README.md
-Pillow==2.1.0

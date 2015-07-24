@@ -1,0 +1,26 @@
+
+<style>
+.w{
+	width: 10px;
+	height: 10px;
+	background-color: #0000FF;
+	float: left;
+}
+.f{
+	width: 10px;
+	height: 10px;
+	background-color: #00FF00;
+	float: left;
+}
+</style>
+
+<div> Squares: </div>
+
+{{#each allsquares}}
+<div>
+	{{#each this}}
+		<div class="{{this}}"></div>
+	{{/each}}<br/>
+</div>
+
+{{/each}}
